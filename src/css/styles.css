@@ -1,0 +1,176 @@
+/**
+  |============================
+  | include css partials with
+  | default @import url()
+  |============================
+*/
+/* Common styles */
+@import url('./reset.css');
+@import url('./alert.css');
+
+body {
+  padding-top: 36px;
+}
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+}
+input[type='text'] {
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  width: 272px;
+  height: 40px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #808080;
+  padding-left: 16px;
+}
+input[type='text']:hover {
+  border: 1px solid #000;
+}
+input[type='text']:focus {
+  outline: none;
+  border: 1px solid #4e75ff;
+  color: #2e2f42;
+}
+button {
+  font-family: 'Montserrat', sans-serif;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 91px;
+  height: 40px;
+  border: none;
+  background: #4e75ff;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+button:hover {
+  background: #6c8cff;
+  transform: scale(1.03);
+  transition: all 0.3s ease;
+}.loader {
+  height: 30px;
+  width: 10px;
+  margin: 0 auto;
+  border-radius: 4px;
+  color: #6c8cff;
+  background: currentColor;
+  position: relative;
+  margin-top: 20px;
+  animation: ht 1s ease-in infinite alternate;
+  box-shadow:
+    15px 0 0 -1px #6c8cff,
+    -15px 0 0 -1px #6c8cff,
+    30px 0 0 -2px #6c8cff,
+    -30px 0 0 -2px #6c8cff,
+    45px 0 0 -3px #6c8cff,
+    -45px 0 0 -3px #6c8cff;
+}
+
+@keyframes ht {
+  100% {
+    height: 0px
+  }
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+.gallery-item {
+  list-style: none;
+  width: 320px;
+  height: 200px;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: border 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.gallery-item:hover {
+  border: 1px solid #4e75ff;
+  box-shadow: 0 2px 8px rgba(78, 117, 255, 0.5);
+  transform: scale(1.03);
+}
+
+.image-wrap {
+  flex: 1;
+  height: 152px;
+  overflow: hidden;
+}
+
+.image-wrap a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.image-wrap a img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.info {
+  height: 48px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.info-item {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+  text-align: center;
+  margin: 0;
+}
+.info:hover{
+  color: #5e618e;
+}
+.info-item b {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
+  font-weight: 600;
+}
+.sl-wrapper .sl-close{
+  color: #4e75ff !important;
+transition: border 0.3s ease, box-shadow 0.3s ease;}
+.sl-wrapper .sl-close:hover {
+  color: #97aeff !important;
+}
+.sl-wrapper .sl-image img{
+  border-radius: 4px !important;
+}
+.sl-wrapper .sl-navigation button.sl-prev, .sl-wrapper .sl-navigation button.sl-next{
+  color: #4e75ff !important;
+}
+.sl-wrapper .sl-counter, .sl-wrapper .sl-image .sl-caption{
+  font-family: 'Montserrat', sans-serif !important;
+}
