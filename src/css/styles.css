@@ -58,7 +58,8 @@ button:hover {
   background: #6c8cff;
   transform: scale(1.03);
   transition: all 0.3s ease;
-}.loader {
+}
+.loader {
   height: 30px;
   width: 10px;
   margin: 0 auto;
@@ -67,6 +68,7 @@ button:hover {
   background: currentColor;
   position: relative;
   margin-top: 20px;
+  margin-bottom: 20px;
   animation: ht 1s ease-in infinite alternate;
   box-shadow:
     15px 0 0 -1px #6c8cff,
@@ -173,4 +175,9 @@ transition: border 0.3s ease, box-shadow 0.3s ease;}
 }
 .sl-wrapper .sl-counter, .sl-wrapper .sl-image .sl-caption{
   font-family: 'Montserrat', sans-serif !important;
+}
+.load-page-btn{
+  margin: 0 auto;
+  width: 125px;
+  margin-bottom: 44px;
 }

@@ -1,7 +1,6 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-// Глобальний екземпляр SimpleLightbox
 let lightbox = null;
 
 export function createGallery(images) {

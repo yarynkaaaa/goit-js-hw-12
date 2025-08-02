@@ -12,8 +12,17 @@ import {
 const form = document.querySelector('.form');
 const inputValue = form.querySelector('input[name="search-text"]');
 const gallery = document.querySelector('.gallery');
-
-form.addEventListener('submit', evt => {
+const loadMoreBtn = document.querySelector('.load-page-btn');
+let currentValue = '';
+let currentPage = 1;
+const perPage = 15;
+function showLoadMore() {
+  loadMoreBtn.style.display = 'block';
+}
+function hideLoadMore() {
+  loadMoreBtn.style.display = 'none';
+}
+form.addEventListener('submit', async evt => {
   evt.preventDefault();
   const searchValue = inputValue.value.trim();
   if (searchValue === '') {
@@ -28,43 +37,70 @@ form.addEventListener('submit', evt => {
     });
     return;
   }
-
+  currentValue = searchValue;
+  currentPage = 1;
   inputValue.value = '';
   clearGallery(gallery);
   showLoader();
-
-  getImagesByQuery(searchValue)
-    .then(data => {
-      const images = data.hits;
-      if (images.length === 0) {
-        iziToast.error({
-          title: 'Error',
-          message:
-            'Sorry, there are no images matching your search query. Please try again!',
-          position: 'topRight',
-          backgroundColor: '#ef4040',
-          color: 'white',
-          progressBarColor: '#b51b1b',
-          timeout: 3000,
-        });
-      } else {
-        renderGallery(gallery, images);
-      }
-    })
-    .catch(error => {
-      console.error('Помилка при запиті до Pixabay:', error);
+  hideLoadMore();
+  try {
+    const data = await getImagesByQuery(currentValue, currentPage, perPage);
+    const images = data.hits;
+    if (images.length === 0) {
       iziToast.error({
         title: 'Error',
         message:
-          'Сталася помилка при завантаженні зображень. Будь ласка, спробуйте пізніше.',
+          'Sorry, there are no images matching your search query. Please try again!',
         position: 'topRight',
-        backgroundColor: '#ef4040;',
+        backgroundColor: '#ef4040',
         color: 'white',
-        progressBarColor: '#b51b1b;',
+        progressBarColor: '#b51b1b',
         timeout: 3000,
       });
-    })
-    .finally(() => {
-      hideLoader();
+    } else {
+      renderGallery(gallery, images);
+      if (images.length === perPage) {
+        showLoadMore();
+      }
+    }
+  } catch (error) {
+    iziToast.error({
+      title: 'Error',
+      message:
+        'Сталася помилка при завантаженні зображень. Будь ласка, спробуйте пізніше.',
+      position: 'topRight',
+      backgroundColor: '#ef4040;',
+      color: 'white',
+      progressBarColor: '#b51b1b;',
+      timeout: 3000,
     });
+  } finally {
+    hideLoader();
+  }
+});
+loadMoreBtn.addEventListener('click', async () => {
+  currentPage++;
+  showLoader();
+  hideLoadMore();
+
+  try {
+    const data = await getImagesByQuery(currentValue, currentPage, perPage);
+    const images = data.hits;
+    renderGallery(gallery, images, false);
+
+    if (images.length === perPage) {
+      showLoadMore();
+    }
+  } catch (error) {
+    iziToast.error({
+      message: 'Error loading more images.',
+      position: 'topRight',
+      backgroundColor: '#ef4040',
+      color: 'white',
+      progressBarColor: '#b51b1b',
+      timeout: 3000,
+    });
+  } finally {
+    hideLoader();
+  }
 });
