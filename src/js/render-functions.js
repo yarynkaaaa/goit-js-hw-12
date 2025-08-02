@@ -65,3 +65,15 @@ export function showLoader() {
 export function hideLoader() {
   document.querySelector('.loader').style.display = 'none';
 }
+export function showLoadMoreBtn() {
+  const loadMoreBtn = document.querySelector('.load-page-btn');
+  if (loadMoreBtn) {
+    loadMoreBtn.style.display = 'block';
+  }
+}
+export function hideLoadMoreBtn() {
+  const loadMoreBtn = document.querySelector('.load-page-btn');
+  if (loadMoreBtn) {
+    loadMoreBtn.style.display = 'none';
+  }
+}

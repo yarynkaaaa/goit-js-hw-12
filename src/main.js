@@ -7,6 +7,8 @@ import {
   showLoader,
   hideLoader,
   renderGallery,
+  hideLoadMoreBtn,
+  showLoadMoreBtn,
 } from './js/render-functions';
 
 const form = document.querySelector('.form');
@@ -16,12 +18,8 @@ const loadMoreBtn = document.querySelector('.load-page-btn');
 let currentValue = '';
 let currentPage = 1;
 const perPage = 15;
-function showLoadMore() {
-  loadMoreBtn.style.display = 'block';
-}
-function hideLoadMore() {
-  loadMoreBtn.style.display = 'none';
-}
+let allImages = 0;
+
 form.addEventListener('submit', async evt => {
   evt.preventDefault();
   const searchValue = inputValue.value.trim();
@@ -41,11 +39,12 @@ form.addEventListener('submit', async evt => {
   currentPage = 1;
   inputValue.value = '';
   clearGallery(gallery);
+  hideLoadMoreBtn();
   showLoader();
-  hideLoadMore();
   try {
     const data = await getImagesByQuery(currentValue, currentPage, perPage);
     const images = data.hits;
+    allImages = data.totalHits;
     if (images.length === 0) {
       iziToast.error({
         title: 'Error',
@@ -59,8 +58,8 @@ form.addEventListener('submit', async evt => {
       });
     } else {
       renderGallery(gallery, images);
-      if (images.length === perPage) {
-        showLoadMore();
+      if (data.totalHits > perPage) {
+        showLoadMoreBtn();
       }
     }
   } catch (error) {
@@ -69,9 +68,9 @@ form.addEventListener('submit', async evt => {
       message:
         'Сталася помилка при завантаженні зображень. Будь ласка, спробуйте пізніше.',
       position: 'topRight',
-      backgroundColor: '#ef4040;',
+      backgroundColor: '#ef4040',
       color: 'white',
-      progressBarColor: '#b51b1b;',
+      progressBarColor: '#b51b1b',
       timeout: 3000,
     });
   } finally {
@@ -81,15 +80,34 @@ form.addEventListener('submit', async evt => {
 loadMoreBtn.addEventListener('click', async () => {
   currentPage++;
   showLoader();
-  hideLoadMore();
+  hideLoadMoreBtn();
 
   try {
     const data = await getImagesByQuery(currentValue, currentPage, perPage);
     const images = data.hits;
     renderGallery(gallery, images, false);
 
-    if (images.length === perPage) {
-      showLoadMore();
+    const firstCard = gallery.firstElementChild;
+    if (firstCard) {
+      const cardHeight = firstCard.getBoundingClientRect().height;
+      window.scrollBy({
+        top: cardHeight * 2.1,
+        behavior: 'smooth',
+      });
+    }
+    const loadedImagesCount = currentPage * perPage;
+    if (loadedImagesCount >= allImages) {
+      hideLoadMoreBtn();
+      iziToast.warning({
+        message: 'You have reached the end of the gallery for this query.',
+        position: 'topRight',
+        backgroundColor: '#ffa000',
+        color: 'white',
+        progressBarColor: '#bb7b10',
+        timeout: 3000,
+      });
+    } else {
+      showLoadMoreBtn();
     }
   } catch (error) {
     iziToast.error({

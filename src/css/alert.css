@@ -7,7 +7,7 @@
     background: url('../img/success.svg') !important;
 }
 .iziToast>.iziToast-body .iziToast-icon.ico-warning{
-    background: url(../img/uwaga.svg) !important;
+    background: url('../img/uwaga.svg') !important;
 }
 .iziToast-title {
     font-family: 'Montserrat', sans-serif !important;

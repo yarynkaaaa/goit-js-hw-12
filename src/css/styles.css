@@ -6,7 +6,7 @@
 */
 /* Common styles */
 @import url('./reset.css');
-@import url('./alert.css');
+@import url('../css/alert.css');
 
 body {
   padding-top: 36px;
@@ -84,6 +84,7 @@ button:hover {
     height: 0px
   }
 }
+
 .gallery {
   display: flex;
   flex-wrap: wrap;
